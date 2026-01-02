@@ -116,7 +116,12 @@ jobs:
         run: |
           # Inject branch meta tag into HTML
           BRANCH="${{ needs.detect-branch.outputs.branch }}"
-          sed -i "/<head>/a\\    <meta name=\"branch\" content=\"${BRANCH}\">" build/index.html
+
+          # Sanitize branch name to prevent XSS/Injection
+          # Escape special characters: & < > " '
+          CLEAN_BRANCH=$(echo "$BRANCH" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g')
+
+          sed -i "/<head>/a\\    <meta name=\"branch\" content=\"${CLEAN_BRANCH}\">" build/index.html
           sed -i "/<head>/a\\    <meta name=\"build-time\" content=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\">" build/index.html
           sed -i "/<head>/a\\    <meta name=\"commit-sha\" content=\"${{ github.sha }}\">" build/index.html
           
