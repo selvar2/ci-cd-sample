@@ -1,0 +1,82 @@
+{
+  "calculator": {
+    "metadata": {
+      "name": "calculator",
+      "version": "1.0.0",
+      "description": "Performs basic arithmetic operations",
+      "author": "Agent Team",
+      "capabilities": [
+        "add",
+        "subtract",
+        "multiply",
+        "divide"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "operation",
+          "operand1",
+          "operand2"
+        ],
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": [
+              "add",
+              "subtract",
+              "multiply",
+              "divide"
+            ],
+            "description": "Arithmetic operation to perform"
+          },
+          "operand1": {
+            "type": "number",
+            "description": "First number"
+          },
+          "operand2": {
+            "type": "number",
+            "description": "Second number"
+          }
+        }
+      }
+    },
+    "enabled": true
+  },
+  "weather": {
+    "metadata": {
+      "name": "weather",
+      "version": "1.0.0",
+      "description": "Retrieves current weather information for a specified city",
+      "author": "Agent Team",
+      "capabilities": [
+        "weather-forecast",
+        "temperature-check"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "city"
+        ],
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "City name"
+          },
+          "units": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "imperial"
+            ],
+            "default": "metric"
+          },
+          "includeDetails": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "enabled": true
+  }
+}
